@@ -1,0 +1,2516 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зертханалық жұмыс №7: Ауксин мен гиббереллиннің өсімдіктердің өсуіне әсері</title>
+<style>
+  :root {
+    --bg-main: #f3f6f4;
+    --bg-card: #ffffff;
+    --primary: #14532d;
+    --primary-mid: #166534;
+    --primary-light: #22c55e;
+    --accent-auxin: #15803d;
+    --accent-gibb: #d97706;
+    --accent-syn: #0284c7;
+    --tier-high: #16a34a;
+    --tier-good: #0284c7;
+    --tier-mid: #eab308;
+    --tier-low: #dc2626;
+    --text-dark: #0f172a;
+    --text-muted: #64748b;
+    --border: #cbd5e1;
+    --radius: 12px;
+    --shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    line-height: 1.5;
+    padding-bottom: 48px;
+  }
+
+  /* Header & Role Switcher */
+  header {
+    background: linear-gradient(135deg, #14532d 0%, #1e3a8a 100%);
+    color: #ffffff;
+    padding: 16px 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.14);
+  }
+
+  .header-inner {
+    max-width: 1360px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.18);
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  header h1 {
+    font-size: 1.32rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .role-switcher {
+    display: flex;
+    background: rgba(15, 23, 42, 0.35);
+    padding: 4px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 4px;
+  }
+
+  .role-btn {
+    border: none;
+    background: transparent;
+    color: #e2e8f0;
+    padding: 9px 16px;
+    border-radius: 9px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .role-btn:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+  }
+
+  .role-btn.active {
+    background: #ffffff;
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  }
+
+  .container {
+    max-width: 1360px;
+    margin: 16px auto 0;
+    padding: 0 16px;
+  }
+
+  .mode-view {
+    display: none;
+  }
+
+  .mode-view.active {
+    display: block;
+  }
+
+  /* Student Identification Bar */
+  .student-bar {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 5px solid var(--primary-mid);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .student-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    flex: 1;
+    align-items: center;
+  }
+
+  .field-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 210px;
+    flex: 1;
+  }
+
+  .field-wrap.small {
+    min-width: 130px;
+    max-width: 170px;
+  }
+
+  .field-wrap label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .text-input {
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    background: #f8fafc;
+    transition: border-color 0.2s;
+  }
+
+  .text-input:focus {
+    outline: none;
+    border-color: var(--primary-mid);
+    background: #ffffff;
+  }
+
+  .progress-pill {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Sub-tabs inside Student Mode */
+  .sub-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-dark);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .tab-btn:hover {
+    background: #ecfdf5;
+    border-color: var(--primary-mid);
+  }
+
+  .tab-btn.active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+  }
+
+  .tab-section {
+    display: none;
+  }
+
+  .tab-section.active {
+    display: block;
+  }
+
+  /* Cards & Grid */
+  .lab-grid {
+    display: grid;
+    grid-template-columns: 325px 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  @media (max-width: 980px) {
+    .lab-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 16px;
+  }
+
+  .card-title {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1.5px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Controls */
+  .control-group {
+    margin-bottom: 15px;
+    padding-bottom: 13px;
+    border-bottom: 1px dashed #e2e8f0;
+  }
+
+  .control-group:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+
+  .control-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.87rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-dark);
+  }
+
+  .day-badge {
+    background: #dcfce7;
+    color: #166534;
+    padding: 1px 9px;
+    border-radius: 6px;
+    font-weight: 700;
+  }
+
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary-mid);
+    cursor: pointer;
+    height: 6px;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #f8fafc;
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .btn:hover {
+    background: #e2e8f0;
+  }
+
+  .btn-primary {
+    background: var(--primary-mid);
+    color: #ffffff;
+    border-color: var(--primary-mid);
+  }
+
+  .btn-primary:hover {
+    background: var(--primary);
+  }
+
+  .btn-accent {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+  }
+
+  .btn-accent:hover {
+    background: #0369a1;
+  }
+
+  .btn-success {
+    background: #16a34a;
+    color: #ffffff;
+    border-color: #16a34a;
+  }
+
+  .btn-success:hover {
+    background: #15803d;
+  }
+
+  .btn-danger {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
+  }
+
+  .btn-danger:hover {
+    background: #fecaca;
+  }
+
+  .btn-active {
+    background: var(--primary);
+    color: #ffffff;
+    border-color: var(--primary);
+  }
+
+  .seg-control {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  .seg-btn {
+    border: none;
+    background: transparent;
+    padding: 7px 4px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .seg-btn.active {
+    background: #ffffff;
+    color: var(--primary);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+
+  /* Simulation Stage */
+  .stage-wrapper {
+    position: relative;
+    width: 100%;
+    background: linear-gradient(180deg, #e0f2fe 0%, #f0fdf4 68%, #e2e8f0 100%);
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  #labSvg {
+    width: 100%;
+    height: auto;
+    display: block;
+    min-height: 350px;
+  }
+
+  .stage-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 9px 12px;
+    background: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .status-banner {
+    margin-top: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: #fefce8;
+    border-left: 4px solid #eab308;
+    font-size: 0.87rem;
+    color: #713f12;
+  }
+
+  /* Data Table & Chart Section */
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  @media (max-width: 980px) {
+    .data-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  table.obs-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.84rem;
+  }
+
+  table.obs-table th {
+    background: var(--primary);
+    color: #ffffff;
+    padding: 8px 6px;
+    border: 1px solid #143627;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  table.obs-table td {
+    padding: 7px 6px;
+    border: 1px solid #cbd5e1;
+    text-align: center;
+  }
+
+  table.obs-table td:first-child {
+    text-align: left;
+    font-weight: 600;
+    background: #f8fafc;
+  }
+
+  .recorded-cell {
+    background-color: #dcfce7 !important;
+    color: #14532d;
+    font-weight: 700;
+  }
+
+  #growthChartSvg {
+    width: 100%;
+    height: 240px;
+    display: block;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+  }
+
+  .legend-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 0.8rem;
+    justify-content: center;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  /* Theory Infographic Cards */
+  .theory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 16px;
+  }
+
+  .hormone-card {
+    border-radius: 12px;
+    padding: 18px;
+    border: 1px solid var(--border);
+    background: #ffffff;
+    box-shadow: var(--shadow);
+  }
+
+  .hormone-card.auxin { border-top: 5px solid var(--accent-auxin); }
+  .hormone-card.gibb { border-top: 5px solid var(--accent-gibb); }
+  .hormone-card.syn { border-top: 5px solid var(--accent-syn); }
+
+  .hormone-card h3 {
+    font-size: 1.08rem;
+    margin-bottom: 10px;
+  }
+
+  .info-list {
+    list-style: none;
+    font-size: 0.9rem;
+  }
+
+  .info-list li {
+    margin-bottom: 8px;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .info-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+    color: var(--primary-mid);
+  }
+
+  /* Quiz & Submission Section */
+  .quiz-layout {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 18px;
+    align-items: start;
+  }
+
+  @media (max-width: 980px) {
+    .quiz-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .quiz-item {
+    margin-bottom: 16px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+  }
+
+  .quiz-q {
+    font-weight: 700;
+    margin-bottom: 10px;
+    font-size: 0.93rem;
+  }
+
+  .quiz-options {
+    display: grid;
+    gap: 7px;
+  }
+
+  .quiz-opt {
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    text-align: left;
+    cursor: pointer;
+    font-size: 0.87rem;
+    transition: all 0.15s;
+  }
+
+  .quiz-opt:hover {
+    border-color: var(--primary-mid);
+    background: #f0fdf4;
+  }
+
+  .quiz-opt.correct {
+    background: #dcfce7;
+    border-color: #16a34a;
+    color: #14532d;
+    font-weight: 600;
+  }
+
+  .quiz-opt.wrong {
+    background: #fee2e2;
+    border-color: #dc2626;
+    color: #7f1d1d;
+  }
+
+  .quiz-feedback {
+    margin-top: 7px;
+    font-size: 0.83rem;
+    font-weight: 600;
+  }
+
+  textarea.conclusion-box {
+    width: 100%;
+    min-height: 92px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    font-family: inherit;
+    font-size: 0.9rem;
+    resize: vertical;
+    margin-top: 6px;
+  }
+
+  textarea.conclusion-box:focus {
+    outline: none;
+    border-color: var(--primary-mid);
+  }
+
+  .submit-box {
+    background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+    border: 1.5px solid #86efac;
+  }
+
+  .result-code-area {
+    margin-top: 14px;
+    padding: 12px;
+    background: #f8fafc;
+    border: 1px dashed #64748b;
+    border-radius: 8px;
+    display: none;
+  }
+
+  .result-code-area.visible {
+    display: block;
+  }
+
+  .code-preview {
+    width: 100%;
+    height: 72px;
+    font-family: monospace;
+    font-size: 0.76rem;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    margin: 6px 0;
+    resize: none;
+  }
+
+  /* TEACHER ANALYTICS DASHBOARD */
+  .teacher-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+
+  .kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .kpi-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .kpi-val {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--primary);
+  }
+
+  .kpi-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .analytics-charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 980px) {
+    .analytics-charts-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .tier-badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .tier-high { background-color: var(--tier-high); }
+  .tier-good { background-color: var(--tier-good); }
+  .tier-mid  { background-color: #ca8a04; }
+  .tier-low  { background-color: var(--tier-low); }
+
+  .import-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+
+  @media (max-width: 820px) {
+    .import-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Modal for Inspecting Student Details */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 1000;
+  }
+
+  .modal-backdrop.open {
+    display: flex;
+  }
+
+  .modal-box {
+    background: #ffffff;
+    border-radius: 14px;
+    max-width: 640px;
+    width: 100%;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
+  }
+
+  /* Toast */
+  #toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 11px 18px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    z-index: 1100;
+  }
+
+  #toast.show {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="badge">Биология • Виртуалды зертханалық кешен</div>
+      <h1>Зертханалық жұмыс №7: Ауксин мен гиббереллиннің өсімдіктердің өсуіне әсері</h1>
+    </div>
+    <div class="role-switcher" role="tablist">
+      <button class="role-btn active" id="roleStudentBtn" onclick="switchMode('student')">🎓 Оқушы режимі</button>
+      <button class="role-btn" id="roleTeacherBtn" onclick="switchMode('teacher')">📊 Мұғалім панелі (Анализ)</button>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+
+  <!-- =========================================================
+       1. ОҚУШЫ РЕЖИМІ (STUDENT MODE)
+  ========================================================== -->
+  <div id="studentModeView" class="mode-view active">
+
+    <!-- Оқушы идентификация панелі -->
+    <div class="student-bar">
+      <div class="student-inputs">
+        <div class="field-wrap">
+          <label for="studentNameInput">Оқушының аты-жөні *</label>
+          <input type="text" id="studentNameInput" class="text-input" placeholder="Мысалы: Арман Серікұлы">
+        </div>
+        <div class="field-wrap small">
+          <label for="studentClassInput">Сыныбы *</label>
+          <input type="text" id="studentClassInput" class="text-input" placeholder="Мысалы: 10А">
+        </div>
+      </div>
+      <div class="progress-pill">
+        <span>Орындалу барысы:</span>
+        <span id="studentProgressText">Өлшемдер: 0/5 күн | Тест: 0/5</span>
+      </div>
+    </div>
+
+    <!-- Ішкі бөлімдер -->
+    <nav class="sub-tabs">
+      <button class="tab-btn active" onclick="switchSubTab('lab', this)">🧪 1-қадам: Тәжірибе және өлшеу</button>
+      <button class="tab-btn" onclick="switchSubTab('quiz', this)">📝 2-қадам: Бағалау және мұғалімге жіберу</button>
+      <button class="tab-btn" onclick="switchSubTab('theory', this)">📚 Теориялық анықтамалық</button>
+    </nav>
+
+    <!-- 1-ҚАДАМ: ВИРТУАЛДЫ ТӘЖІРИБЕ -->
+    <section id="tab-lab" class="tab-section active">
+      <div class="lab-grid">
+        
+        <!-- Басқару панелі -->
+        <aside class="card">
+          <div class="card-title">
+            <span>⚙️ Тәжірибе параметрлері</span>
+            <button class="btn" style="padding:4px 8px; font-size:0.78rem;" onclick="resetLab()">Қайта бастау</button>
+          </div>
+
+          <!-- Уақыт шкаласы -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>Бақылау уақыты:</span>
+              <span class="day-badge" id="dayLabel">1-күн</span>
+            </div>
+            <input type="range" id="daySlider" min="1" max="5" step="1" value="1" oninput="setDay(this.value)">
+            <div class="btn-row">
+              <button class="btn" style="flex:1;" onclick="prevDay()">◀ Алдыңғы</button>
+              <button class="btn btn-primary" style="flex:1;" onclick="nextDay()">Келесі күн ▶</button>
+              <button class="btn" style="flex:1;" id="autoPlayBtn" onclick="toggleAutoPlay()">▶ Авто</button>
+            </div>
+          </div>
+
+          <!-- Ауксин концентрациясы -->
+          <div class="control-group">
+            <div class="control-label">
+              <span style="color: var(--accent-auxin);">2-үлгі: Ауксин (ИУҚ) мөлшері</span>
+            </div>
+            <div class="seg-control" id="auxinConcCtrl">
+              <button class="seg-btn" onclick="setConc('auxin', 'low', this)">Төмен</button>
+              <button class="seg-btn active" onclick="setConc('auxin', 'opt', this)">Орташа</button>
+              <button class="seg-btn" onclick="setConc('auxin', 'high', this)">Жоғары</button>
+            </div>
+          </div>
+
+          <!-- Гиббереллин концентрациясы -->
+          <div class="control-group">
+            <div class="control-label">
+              <span style="color: var(--accent-gibb);">3-үлгі: Гиббереллин (ГҚ) мөлшері</span>
+            </div>
+            <div class="seg-control" id="gibbConcCtrl">
+              <button class="seg-btn" onclick="setConc('gibb', 'low', this)">Төмен</button>
+              <button class="seg-btn active" onclick="setConc('gibb', 'opt', this)">Орташа</button>
+              <button class="seg-btn" onclick="setConc('gibb', 'high', this)">Жоғары</button>
+            </div>
+          </div>
+
+          <!-- Жарық бағыты (Фототропизм) -->
+          <div class="control-group">
+            <div class="control-label">
+              <span>☀️ Жарық көзінің бағыты:</span>
+            </div>
+            <div class="seg-control" id="lightCtrl">
+              <button class="seg-btn" onclick="setLight('left', this)">⬅ Сол жақ</button>
+              <button class="seg-btn active" onclick="setLight('top', this)">⬆ Жоғарыдан</button>
+              <button class="seg-btn" onclick="setLight('right', this)">Оң жақ ➡</button>
+            </div>
+          </div>
+
+          <!-- Өлшемді тіркеу -->
+          <div class="control-group">
+            <button class="btn btn-accent" style="width:100%; padding:11px; font-size:0.9rem;" onclick="recordMeasurements()">
+              📝 Ағымдағы күн өлшемдерін тіркеу
+            </button>
+            <button class="btn" style="width:100%; margin-top:6px; font-size:0.82rem;" onclick="autoFillAllDays()">
+              ⚡ 1–5 күндерді автоматты өлшеу
+            </button>
+          </div>
+        </aside>
+
+        <!-- Зертханалық үстел (SVG) -->
+        <div class="card">
+          <div class="card-title">
+            <span>🌱 Өскіндердің өсуін бақылау стенді (Бұршақ өскіндері)</span>
+            <span style="font-size:0.82rem; color:var(--text-muted); font-weight:500;">1 бөлік = 10 мм (1 см)</span>
+          </div>
+
+          <div class="stage-wrapper" id="stageContainer">
+            <svg id="labSvg" viewBox="0 0 840 410" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fde047" stop-opacity="0.95"/>
+                  <stop offset="55%" stop-color="#facc15" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#facc15" stop-opacity="0"/>
+                </radialGradient>
+                <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="0.55"/>
+                  <stop offset="50%" stop-color="#e2e8f0" stop-opacity="0.2"/>
+                  <stop offset="100%" stop-color="#ffffff" stop-opacity="0.5"/>
+                </linearGradient>
+              </defs>
+
+              <!-- Күн / Жарық көзі -->
+              <g id="lightSourceGroup" transform="translate(420, 36)">
+                <circle cx="0" cy="0" r="46" fill="url(#sunGlow)"/>
+                <circle cx="0" cy="0" r="16" fill="#f59e0b"/>
+                <g id="lightRays" stroke="#f59e0b" stroke-width="2.2" stroke-dasharray="5,5" opacity="0.75">
+                  <line x1="-25" y1="22" x2="-160" y2="140"/>
+                  <line x1="0" y1="26" x2="0" y2="150"/>
+                  <line x1="25" y1="22" x2="160" y2="140"/>
+                </g>
+              </g>
+
+              <!-- Фондық өлшеу тор сызықтары (әр 20 мм = 22px) -->
+              <g id="gridLines" stroke="#94a3b8" stroke-width="0.7" stroke-dasharray="3,3" opacity="0.55">
+                <line x1="35" y1="270" x2="815" y2="270" stroke="#475569" stroke-width="1.5" stroke-dasharray="none"/>
+                <line x1="35" y1="248" x2="815" y2="248"/><text x="10" y="251" font-size="10" fill="#475569" stroke="none">20</text>
+                <line x1="35" y1="226" x2="815" y2="226"/><text x="10" y="229" font-size="10" fill="#475569" stroke="none">40</text>
+                <line x1="35" y1="204" x2="815" y2="204"/><text x="10" y="207" font-size="10" fill="#475569" stroke="none">60</text>
+                <line x1="35" y1="182" x2="815" y2="182"/><text x="10" y="185" font-size="10" fill="#475569" stroke="none">80</text>
+                <line x1="35" y1="160" x2="815" y2="160"/><text x="6" y="163" font-size="10" fill="#475569" stroke="none">100</text>
+                <line x1="35" y1="138" x2="815" y2="138"/><text x="6" y="141" font-size="10" fill="#475569" stroke="none">120</text>
+                <line x1="35" y1="116" x2="815" y2="116"/><text x="6" y="119" font-size="10" fill="#475569" stroke="none">140</text>
+                <line x1="35" y1="94" x2="815" y2="94"/><text x="6" y="97" font-size="10" fill="#475569" stroke="none">160</text>
+                <text x="6" y="273" font-size="10" font-weight="bold" fill="#334155" stroke="none">0 мм</text>
+              </g>
+
+              <!-- Зертханалық үстел беті -->
+              <rect x="0" y="368" width="840" height="42" fill="#cbd5e1"/>
+              <line x1="0" y1="368" x2="840" y2="368" stroke="#94a3b8" stroke-width="2"/>
+
+              <!-- 4 Ыдыс пен өсімдіктер контейнері -->
+              <g id="plantsLayer"></g>
+
+              <!-- Интерактивті жылжымалы сызғыш -->
+              <g id="rulerTool" transform="translate(65, 72)" style="cursor: grab;">
+                <rect x="0" y="0" width="48" height="220" rx="4" fill="#fef08a" fill-opacity="0.93" stroke="#ca8a04" stroke-width="1.5"/>
+                <text x="24" y="14" font-size="9" font-weight="bold" fill="#854d0e" text-anchor="middle">ММ</text>
+                <g id="rulerTicks"></g>
+              </g>
+            </svg>
+          </div>
+
+          <div class="stage-toolbar">
+            <label class="toggle-label">
+              <input type="checkbox" id="rulerToggle" checked onchange="toggleRuler(this.checked)">
+              📏 Жылжымалы сызғыш (тінтуірмен немесе саусақпен сүйреңіз)
+            </label>
+            <label class="toggle-label">
+              <input type="checkbox" id="auxinDotsToggle" checked onchange="renderStage()">
+              🟢 Ауксин молекулаларының таралуын көрсету
+            </label>
+          </div>
+
+          <div class="status-banner" id="bioExplanation"></div>
+        </div>
+      </div>
+
+      <!-- Бақылау кестесі және SVG График -->
+      <div class="data-grid">
+        <div class="card">
+          <div class="card-title">
+            <span>📋 Бақылау нәтижелерін тіркеу кестесі (Сабақ биіктігі, мм)</span>
+            <button class="btn" style="padding:4px 10px; font-size:0.78rem;" onclick="clearTable()">Тазалау</button>
+          </div>
+          <div class="table-responsive">
+            <table class="obs-table">
+              <thead>
+                <tr>
+                  <th>Тәжірибе нұсқасы</th>
+                  <th>1-күн</th>
+                  <th>2-күн</th>
+                  <th>3-күн</th>
+                  <th>4-күн</th>
+                  <th>5-күн</th>
+                  <th>Өсім (ΔL)</th>
+                  <th>Қосалқы тамырлар</th>
+                </tr>
+              </thead>
+              <tbody id="obsTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>📈 Өсу динамикасының графигі (мм / күн)</span>
+          </div>
+          <svg id="growthChartSvg" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div class="legend-row">
+            <div class="legend-item"><span class="dot" style="background:#64748b;"></span>1. Бақылау</div>
+            <div class="legend-item"><span class="dot" style="background:#15803d;"></span>2. Ауксин</div>
+            <div class="legend-item"><span class="dot" style="background:#d97706;"></span>3. Гиббереллин</div>
+            <div class="legend-item"><span class="dot" style="background:#0284c7;"></span>4. Ауксин + ГҚ</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2-ҚАДАМ: БАҒАЛАУ ЖӘНЕ МҰҒАЛІМГЕ ЖІБЕРУ -->
+    <section id="tab-quiz" class="tab-section">
+      <div class="quiz-layout">
+        <div class="card">
+          <div class="card-title">
+            <span>🧠 Бақылау және талдау сұрақтары (5 тапсырма)</span>
+            <span id="quizScoreBadge" style="font-size:0.88rem; color:var(--primary);">Ұпай: 0 / 5</span>
+          </div>
+          <div id="quizContainer"></div>
+        </div>
+
+        <div class="card submit-box">
+          <div class="card-title">
+            <span>📤 Қорытынды және мұғалімге жіберу</span>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <label for="conclusionInput" style="font-size:0.88rem; font-weight:700; color:var(--text-dark);">
+              Зертханалық жұмыс бойынша қорытынды жазыңыз:
+            </label>
+            <textarea id="conclusionInput" class="conclusion-box" placeholder="Тәжірибе нәтижесінде ауксин мен гиббереллиннің өсімдіктің сабағы мен тамырына қалай әсер еткенін қысқаша қорытындылаңыз..."></textarea>
+          </div>
+
+          <button class="btn btn-success" style="width:100%; padding:13px; font-size:0.96rem; font-weight:700;" onclick="submitStudentWork()">
+            ✅ Жұмысты аяқтау және мұғалімге жіберу
+          </button>
+
+          <div id="submissionStatusBox" class="result-code-area">
+            <div style="font-weight:700; color:#15803d; font-size:0.92rem; margin-bottom:4px;">
+              🎉 Жұмыс сәтті сақталды!
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-dark); margin-bottom:6px;">
+              Нәтижеңіз осы құрылғыдағы <strong>«Мұғалім панеліне»</strong> автоматты түрде қосылды. Егер өз телефоныңыздан орындасаңыз, төмендегі кодты көшіріп мұғалімге (WhatsApp / Telegram / Күнделік) жіберіңіз немесе файлды жүктеңіз:
+            </p>
+            <textarea id="generatedCodeBox" class="code-preview" readonly></textarea>
+            <div class="btn-row">
+              <button class="btn btn-primary" style="flex:1;" onclick="copyResultCode()">📋 Кодты көшіру</button>
+              <button class="btn btn-accent" style="flex:1;" onclick="downloadResultJson()">💾 Файлды жүктеу (.json)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ТЕОРИЯЛЫҚ АНЫҚТАМАЛЫҚ -->
+    <section id="tab-theory" class="tab-section">
+      <div class="theory-grid">
+        <div class="hormone-card auxin">
+          <h3 style="color: var(--accent-auxin);">🌿 Ауксин (Индолилсірке қышқылы — ИУҚ)</h3>
+          <ul class="info-list">
+            <li><strong>Түзілу орны:</strong> Сабақтың ұштық бүршігі (апикальды меристема), жас жапырақтар және дамып келе жатқан тұқымдар.</li>
+            <li><strong>Апикальды басымдылық:</strong> Ұштық бүршікте түзілген ауксин төмен қарай жылжып, бүйір бүршіктердің өсуін тежейді.</li>
+            <li><strong>Фототропизм:</strong> Жарық бір бүйірден түскенде ауксин сабақтың <em>көлеңке жағына</em> жиналады. Көлеңке жақтағы жасушалар тезірек ұзарып, сабақ жарыққа қарай иіледі.</li>
+            <li><strong>Тамыр түзілуі:</strong> Қосалқы және жанама тамырлардың қалыптасуын белсенді ынталандырады.</li>
+            <li><strong>Концентрация әсері:</strong> Жоғары концентрацияда этилен синтезін қоздырып, сабақтың өсуін тежейді.</li>
+          </ul>
+        </div>
+
+        <div class="hormone-card gibb">
+          <h3 style="color: var(--accent-gibb);">🌾 Гиббереллин (Гибберелл қышқылы — ГҚ<sub>3</sub>)</h3>
+          <ul class="info-list">
+            <li><strong>Түзілу орны:</strong> Жас өркендер, тамыр ұштары, өніп келе жатқан тұқым ұрығы.</li>
+            <li><strong>Сабақтың ұзаруы:</strong> Жасушалардың бөлінуін және созылуын қатар ынталандырып, <strong>буынаралықтардың күрт ұзаруына</strong> әкеледі.</li>
+            <li><strong>Ергежейлі өсімдіктер:</strong> Генетикалық ергежейлі өсімдіктерді гиббереллинмен өңдегенде олар қалыпты биік өсімдікке айналады.</li>
+            <li><strong>Тұқымның өнуі:</strong> Тұқымның тыныштық күйін бұзып, α-амилаза ферментінің түзілуін іске қосады.</li>
+            <li><strong>Ауыл шаруашылығында:</strong> Тұқымсыз жемістер (партенокарпия) алуда және жүзім шашағын ірілендіруде қолданылады.</li>
+          </ul>
+        </div>
+
+        <div class="hormone-card syn">
+          <h3 style="color: var(--accent-syn);">🔬 Синергиялық әсер және тәжірибе әдістемесі</h3>
+          <ul class="info-list">
+            <li><strong>Синергизм (Ауксин + Гиббереллин):</strong> Екі фитогормон бірге әсер еткенде бірін-бірі толықтырып, сабақтың максималды өсуі мен қуатты тамыр жүйесінің дамуын қамтамасыз етеді.</li>
+            <li><strong>Салыстырмалы талдау:</strong> Ауксин тамырлану мен тропизмге басым әсер етсе, гиббереллин сабақ буынаралықтарының созылуына басым әсер етеді.</li>
+            <li><strong>Бақылау тобы:</strong> Гормон қосылмаған таза сулы орта (1-үлгі) салыстыру эталоны ретінде қолданылады.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================
+       2. МҰҒАЛІМ ПАНЕЛІ ЖӘНЕ АНАЛИЗ (TEACHER DASHBOARD)
+  ========================================================== -->
+  <div id="teacherModeView" class="mode-view">
+
+    <!-- Мұғалім құралдар тақтасы -->
+    <div class="card teacher-toolbar">
+      <div>
+        <h2 style="font-size:1.15rem; color:var(--primary);">📊 Сыныптың зертханалық жұмыс нәтижелерін талдау панелі</h2>
+        <p style="font-size:0.84rem; color:var(--text-muted);">Оқушылар жіберген нәтиже кодтарын немесе файлдарын қосып, сыныптың толық меңгеру диаграммасын алыңыз.</p>
+      </div>
+      <div class="btn-row" style="margin-top:0;">
+        <button class="btn btn-primary" onclick="loadDemoClassData()">👥 Демо сынып деректерін жүктеу (18 оқушы)</button>
+        <button class="btn btn-accent" onclick="exportClassCSV()">📥 Есепті жүктеу (CSV / Excel)</button>
+        <button class="btn btn-danger" onclick="clearAllTeacherData()">🗑️ Деректерді тазалау</button>
+      </div>
+    </div>
+
+    <!-- Оқушы нәтижелерін импорттау блогы -->
+    <div class="import-grid">
+      <div class="card">
+        <div class="card-title">
+          <span>📋 Оқушы кодын қосу (Бір немесе бірнеше код)</span>
+        </div>
+        <textarea id="importCodesInput" class="conclusion-box" style="min-height:68px;" placeholder="Оқушылар жіберген ZERT7-... кодтарын осында қойыңыз (әр код жаңа жолдан немесе бос орын арқылы)..."></textarea>
+        <button class="btn btn-primary" style="width:100%; margin-top:8px;" onclick="importFromCodes()">➕ Кодтарды талдауға қосу</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>📂 Оқушы файлдарын жүктеу (.json)</span>
+        </div>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin-bottom:10px;">
+          Оқушылар жүктеп жіберген <code>.json</code> файлдарын бірден топтап таңдауға болады:
+        </p>
+        <input type="file" id="importFilesInput" accept=".json" multiple style="display:none;" onchange="importFromFiles(event)">
+        <button class="btn btn-accent" style="width:100%; padding:14px;" onclick="document.getElementById('importFilesInput').click()">
+          📁 .JSON файлдарын таңдау және жүктеу
+        </button>
+      </div>
+    </div>
+
+    <!-- KPI Негізгі көрсеткіштер -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <span class="kpi-label">Жұмыс тапсырған оқушылар</span>
+        <span class="kpi-val" id="kpiTotalStudents">0</span>
+        <span class="kpi-sub" id="kpiClassFilterInfo">Барлық сыныптар бойынша</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Сыныптың орташа балы</span>
+        <span class="kpi-val" id="kpiAvgScore">0%</span>
+        <span class="kpi-sub" id="kpiAvgPoints">Орташа ұпай: 0 / 5</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Сапа көрсеткіші (65%–100%)</span>
+        <span class="kpi-val" id="kpiQualityRate" style="color:var(--tier-high);">0%</span>
+        <span class="kpi-sub">«Жоғары» және «Орташадан жоғары» деңгей</span>
+      </div>
+      <div class="kpi-card">
+        <span class="kpi-label">Ең қиын тапсырма</span>
+        <span class="kpi-val" id="kpiHardestQ" style="font-size:1.15rem; color:var(--tier-low);">—</span>
+        <span class="kpi-sub" id="kpiHardestQSub">Дұрыс жауап үлесі ең төмен сұрақ</span>
+      </div>
+    </div>
+
+    <!-- СЫНЫПТЫҢ МЕҢГЕРУ ДИАГРАММАЛАРЫ (SVG) -->
+    <div class="analytics-charts-grid">
+      <!-- 1. Меңгеру деңгейлері бойынша диаграмма -->
+      <div class="card">
+        <div class="card-title">
+          <span>🎯 Сыныптың меңгеру деңгейлері бойынша диаграммасы</span>
+        </div>
+        <svg id="masteryTierSvg" viewBox="0 0 520 260" style="width:100%; height:auto; display:block;"></svg>
+      </div>
+
+      <!-- 2. Тапсырмалар (сұрақтар) бойынша талдау -->
+      <div class="card">
+        <div class="card-title">
+          <span>📊 Тапсырмалар бойынша меңгеру талдауы (1–5 сұрақтар)</span>
+        </div>
+        <svg id="questionAnalysisSvg" viewBox="0 0 520 260" style="width:100%; height:auto; display:block;"></svg>
+      </div>
+    </div>
+
+    <!-- 3. Сыныптың толық оқушыларының жеке меңгеру диаграммасы -->
+    <div class="card" style="margin-bottom:18px;">
+      <div class="card-title">
+        <span>📈 Сынып оқушыларының толық меңгеру диаграммасы (Әр оқушы бойынша %)</span>
+        <div style="display:flex; gap:8px; align-items:center;">
+          <label for="classFilterSelect" style="font-size:0.82rem; color:var(--text-muted);">Сынып:</label>
+          <select id="classFilterSelect" class="text-input" style="padding:4px 10px; font-size:0.84rem;" onchange="renderTeacherDashboard()">
+            <option value="ALL">Барлық сыныптар</option>
+          </select>
+        </div>
+      </div>
+      <div style="width:100%; overflow-x:auto;">
+        <svg id="allStudentsBarSvg" viewBox="0 0 1100 290" style="width:100%; min-width:680px; height:auto; display:block;"></svg>
+      </div>
+    </div>
+
+    <!-- Оқушылар тізімі және егжей-тегжейлі кесте -->
+    <div class="card">
+      <div class="card-title">
+        <span>📋 Оқушылардың жеке нәтижелер тізімі</span>
+        <input type="text" id="studentSearchInput" class="text-input" style="padding:5px 10px; font-size:0.84rem; min-width:220px;" placeholder="🔍 Аты-жөні бойынша іздеу..." oninput="renderTeacherDashboard()">
+      </div>
+      <div class="table-responsive">
+        <table class="obs-table">
+          <thead>
+            <tr>
+              <th>№</th>
+              <th>Оқушының аты-жөні</th>
+              <th>Сыныбы</th>
+              <th>Тәжірибе өлшемдері</th>
+              <th>Тест ұпайы</th>
+              <th>Меңгеру (%)</th>
+              <th>Меңгеру деңгейі</th>
+              <th>Әрекет</th>
+            </tr>
+          </thead>
+          <tbody id="teacherRosterBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<!-- Оқушы жұмысын толық қарау модалы -->
+<div class="modal-backdrop" id="detailModal" onclick="if(event.target===this) closeDetailModal()">
+  <div class="modal-box">
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1.5px solid #e2e8f0; padding-bottom:10px; margin-bottom:12px;">
+      <h3 id="modalStudentTitle" style="color:var(--primary); font-size:1.1rem;">Оқушы нәтижесі</h3>
+      <button class="btn" style="padding:4px 10px;" onclick="closeDetailModal()">✕ Жабу</button>
+    </div>
+    <div id="modalStudentContent" style="font-size:0.9rem;"></div>
+  </div>
+</div>
+
+<div id="toast">Хабарлама</div>
+
+<script>
+  /* =====================================================================
+     1. СИМУЛЯТОР ЖӘНЕ ОҚУШЫ КҮЙІ (STATE)
+  ===================================================================== */
+  const STORAGE_KEY = 'zerthana7_class_submissions_v1';
+
+  const state = {
+    day: 1,
+    auxinConc: 'opt', // 'low', 'opt', 'high'
+    gibbConc: 'opt',  // 'low', 'opt', 'high'
+    lightDir: 'top',  // 'left', 'top', 'right'
+    autoTimer: null,
+    recorded: {
+      control: {},
+      auxin: {},
+      gibb: {},
+      synergy: {}
+    },
+    answers: {} // qIdx -> selectedOptionIdx
+  };
+
+  const quizData = [
+    {
+      shortTitle: "1. Буынаралықтың ұзаруы",
+      q: "1. Қай фитогормон сабақ буынаралықтарының күрт ұзаруына және ергежейлі өсімдіктердің биіктеуіне ең күшті әсер етеді?",
+      options: ["Абсциз қышқылы", "Гиббереллин (ГҚ)", "Этилен", "Цитокинин"],
+      correct: 1,
+      exp: "Гиббереллин сабақ буынаралықтарындағы жасушалардың созылуы мен бөлінуін күрт арттырады."
+    },
+    {
+      shortTitle: "2. Фототропизм механизмі",
+      q: "2. Жарық өсімдікке бір бүйірден (мысалы, сол жақтан) түскенде, ауксин сабақтың қай бөлігіне жиналады?",
+      options: ["Жарық түскен жағына", "Көлеңке жағына", "Тек тамыр ұшына", "Ешқайда жылжымайды"],
+      correct: 1,
+      exp: "Ауксин көлеңке жаққа ауысып, сол жақтағы жасушалардың тез ұзаруын тудырады, нәтижесінде сабақ жарыққа қарай иіледі."
+    },
+    {
+      shortTitle: "3. Концентрация әсері",
+      q: "3. Тәжірибеде ауксиннің тым жоғары концентрациясын қолданғанда сабақтың өсуінде қандай өзгеріс байқалады?",
+      options: ["Сабақтың өсуі шексіз жылдамдайды", "Өсімдіктің өсуі тежеледі (ингибирленеді)", "Қосалқы тамырлар еселеп көбейеді", "Ешқандай өзгеріс болмайды"],
+      correct: 1,
+      exp: "Фитогормондар тек оңтайлы (орташа) концентрацияда өсуді ынталандырады, ал жоғары мөлшерде этилен түзілуін қоздырып, өсуді тежейді."
+    },
+    {
+      shortTitle: "4. Қосалқы тамыр түзілуі",
+      q: "4. Бау-бақша шаруашылығында өсімдік қалемшелерін жылдам тамырландыру үшін қай гормон қолданылады?",
+      options: ["Ауксин (ИУҚ)", "Гиббереллин", "Этилен", "Абсциз қышқылы"],
+      correct: 0,
+      exp: "Ауксин қосалқы және жанама тамырлардың түзілуін белсенді түрде ынталандырады."
+    },
+    {
+      shortTitle: "5. Гормондар синергизмі",
+      q: "5. Ауксин мен гиббереллинді бірге қолданғанда (4-үлгі) қандай нәтиже байқалады?",
+      options: [
+        "Екі гормон бірін-бірі жойып, өсімдік қурап қалады",
+        "Синергиялық әсер байқалып, сабақ биіктігі мен тамыр жүйесі қатар жақсы дамиды",
+        "Тек тамыр өсіп, сабақ мүлдем өспейді",
+        "Өсімдік жарықтан теріс бұрылады"
+      ],
+      correct: 1,
+      exp: "Ауксин мен гиббереллин синергиялық (бірін-бірі күшейтетін) әсер көрсетіп, сабақтың ұзаруы мен тамырлануын қатар күшейтеді."
+    }
+  ];
+
+  /* =====================================================================
+     2. ФИЗИОЛОГИЯЛЫҚ ӨСУ МОДЕЛІ ЖӘНЕ SVG САХНА
+  ===================================================================== */
+  function calculatePlantMetrics(type, day) {
+    const t = day - 1;
+    let stem = 20;
+    let rootLen = 15;
+    let lateralRoots = 2;
+    let bendAngle = 0;
+
+    const lightSign = state.lightDir === 'left' ? -1 : (state.lightDir === 'right' ? 1 : 0);
+
+    if (type === 'control') {
+      stem = Math.round(20 + t * 11);
+      rootLen = Math.round(15 + t * 7);
+      lateralRoots = 2 + Math.floor(t * 1.2);
+      bendAngle = lightSign * t * 4.5;
+    } else if (type === 'auxin') {
+      if (state.auxinConc === 'low') {
+        stem = Math.round(20 + t * 14);
+        rootLen = Math.round(15 + t * 9);
+        lateralRoots = 2 + t * 2;
+        bendAngle = lightSign * t * 6.5;
+      } else if (state.auxinConc === 'opt') {
+        stem = Math.round(20 + t * 18.5);
+        rootLen = Math.round(15 + t * 12.5);
+        lateralRoots = 2 + t * 4;
+        bendAngle = lightSign * t * 9.5;
+      } else {
+        stem = Math.round(20 + t * 5.5);
+        rootLen = Math.round(15 + t * 3);
+        lateralRoots = 2 + Math.floor(t * 0.5);
+        bendAngle = lightSign * t * 2;
+      }
+    } else if (type === 'gibb') {
+      if (state.gibbConc === 'low') {
+        stem = Math.round(20 + t * 18);
+        rootLen = Math.round(15 + t * 7);
+        lateralRoots = 2 + Math.floor(t * 1.2);
+        bendAngle = lightSign * t * 4.5;
+      } else if (state.gibbConc === 'opt') {
+        stem = Math.round(20 + t * 27.5);
+        rootLen = Math.round(15 + t * 7.5);
+        lateralRoots = 2 + Math.floor(t * 1.3);
+        bendAngle = lightSign * t * 5;
+      } else {
+        stem = Math.round(20 + t * 33);
+        rootLen = Math.round(15 + t * 6.5);
+        lateralRoots = 2 + t;
+        bendAngle = lightSign * t * 6;
+      }
+    } else if (type === 'synergy') {
+      const auxFactor = state.auxinConc === 'high' ? 0.65 : (state.auxinConc === 'opt' ? 1.15 : 1.0);
+      const gibbFactor = state.gibbConc === 'low' ? 0.85 : 1.1;
+      stem = Math.round(20 + t * 31 * auxFactor * gibbFactor);
+      if (stem > 162) stem = 162;
+      rootLen = Math.round(15 + t * 12 * (state.auxinConc === 'high' ? 0.5 : 1));
+      lateralRoots = state.auxinConc === 'high' ? 4 : (2 + t * 4);
+      bendAngle = lightSign * t * 8.5;
+    }
+
+    return { stem, rootLen, lateralRoots, bendAngle };
+  }
+
+  function renderStage() {
+    const plantsLayer = document.getElementById('plantsLayer');
+    const showDots = document.getElementById('auxinDotsToggle').checked;
+    const scalePx = 1.1;
+    const zeroY = 270;
+
+    const samples = [
+      { id: 'control', name: '1. Бақылау (Су)', x: 135, color: '#64748b', liquid: '#bae6fd' },
+      { id: 'auxin',   name: '2. Ауксин (ИУҚ)', x: 325, color: '#15803d', liquid: '#bbf7d0' },
+      { id: 'gibb',    name: '3. Гиббереллин', x: 515, color: '#d97706', liquid: '#fde68a' },
+      { id: 'synergy', name: '4. Ауксин + ГҚ', x: 705, color: '#0284c7', liquid: '#a5f3fc' }
+    ];
+
+    let svgHtml = '';
+
+    samples.forEach(s => {
+      const m = calculatePlantMetrics(s.id, state.day);
+      const stemPx = m.stem * scalePx;
+      const rootPx = m.rootLen * scalePx;
+
+      const rad = (m.bendAngle * Math.PI) / 180;
+      const tipX = s.x + Math.sin(rad) * stemPx;
+      const tipY = zeroY - Math.cos(rad) * stemPx;
+      const ctrlX = s.x + Math.sin(rad * 0.4) * (stemPx * 0.5);
+      const ctrlY = zeroY - Math.cos(rad * 0.4) * (stemPx * 0.5);
+
+      svgHtml += `
+        <g>
+          <rect x="${s.x - 42}" y="${zeroY + 8}" width="84" height="86" rx="4" fill="${s.liquid}" opacity="0.65"/>
+          <rect x="${s.x - 44}" y="${zeroY - 2}" width="88" height="98" rx="6" fill="url(#glassGrad)" stroke="#64748b" stroke-width="1.8"/>
+          <line x1="${s.x - 44}" y1="${zeroY}" x2="${s.x + 44}" y2="${zeroY}" stroke="#334155" stroke-width="2.5"/>
+          <path d="M ${s.x} ${zeroY} Q ${s.x - 3} ${zeroY + rootPx * 0.5} ${s.x} ${zeroY + rootPx}" 
+                stroke="#78350f" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+      `;
+
+      for (let i = 0; i < m.lateralRoots; i++) {
+        const ratio = (i + 1) / (m.lateralRoots + 1);
+        const ry = zeroY + rootPx * ratio;
+        const side = i % 2 === 0 ? -1 : 1;
+        const rLen = 10 + (1 - ratio) * 14;
+        svgHtml += `
+          <path d="M ${s.x} ${ry} Q ${s.x + side * rLen * 0.6} ${ry + 4} ${s.x + side * rLen} ${ry + 11}" 
+                stroke="#92400e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        `;
+      }
+
+      const strokeW = (s.id === 'gibb' && state.gibbConc === 'high') ? 3.2 : 4.5;
+      svgHtml += `
+          <path d="M ${s.x} ${zeroY} Q ${ctrlX} ${ctrlY} ${tipX} ${tipY}" 
+                stroke="#16a34a" stroke-width="${strokeW}" fill="none" stroke-linecap="round"/>
+      `;
+
+      if (showDots && (s.id === 'auxin' || s.id === 'synergy')) {
+        const dotOffset = state.lightDir === 'left' ? 4 : (state.lightDir === 'right' ? -4 : 0);
+        const dotCount = state.auxinConc === 'high' ? 9 : (state.auxinConc === 'opt' ? 6 : 3);
+        for (let d = 1; d <= dotCount; d++) {
+          const tRatio = d / (dotCount + 1);
+          const dx = s.x + (tipX - s.x) * tRatio + dotOffset;
+          const dy = zeroY + (tipY - zeroY) * tRatio;
+          svgHtml += `<circle cx="${dx}" cy="${dy}" r="2.3" fill="#14532d" opacity="0.85"/>`;
+        }
+      }
+
+      const leafNodes = [0.42, 0.72, 0.98];
+      leafNodes.forEach((pos, idx) => {
+        const lx = s.x + (tipX - s.x) * pos;
+        const ly = zeroY + (tipY - zeroY) * pos;
+        const dir = idx % 2 === 0 ? -1 : 1;
+        const leafAngle = m.bendAngle + dir * 32;
+        svgHtml += `
+          <g transform="translate(${lx}, ${ly}) rotate(${leafAngle})">
+            <ellipse cx="${dir * 11}" cy="0" rx="11" ry="5" fill="#22c55e" stroke="#15803d" stroke-width="1"/>
+          </g>
+        `;
+      });
+
+      svgHtml += `
+          <rect x="${s.x - 56}" y="373" width="112" height="22" rx="5" fill="${s.color}"/>
+          <text x="${s.x}" y="388" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">${s.name}</text>
+          <rect x="${tipX - 24}" y="${tipY - 26}" width="48" height="17" rx="4" fill="#ffffff" stroke="${s.color}" stroke-width="1.2"/>
+          <text x="${tipX}" y="${tipY - 14}" font-size="10" font-weight="bold" fill="${s.color}" text-anchor="middle">${m.stem} мм</text>
+        </g>
+      `;
+    });
+
+    plantsLayer.innerHTML = svgHtml;
+    updateExplanationText();
+  }
+
+  function setLight(dir, btn) {
+    state.lightDir = dir;
+    document.querySelectorAll('#lightCtrl .seg-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const sun = document.getElementById('lightSourceGroup');
+    const rays = document.getElementById('lightRays');
+
+    if (dir === 'left') {
+      sun.setAttribute('transform', 'translate(65, 65)');
+      rays.innerHTML = `
+        <line x1="20" y1="15" x2="260" y2="120"/>
+        <line x1="22" y1="25" x2="240" y2="175"/>
+        <line x1="15" y1="32" x2="180" y2="210"/>
+      `;
+    } else if (dir === 'right') {
+      sun.setAttribute('transform', 'translate(775, 65)');
+      rays.innerHTML = `
+        <line x1="-20" y1="15" x2="-260" y2="120"/>
+        <line x1="-22" y1="25" x2="-240" y2="175"/>
+        <line x1="-15" y1="32" x2="-180" y2="210"/>
+      `;
+    } else {
+      sun.setAttribute('transform', 'translate(420, 36)');
+      rays.innerHTML = `
+        <line x1="-25" y1="22" x2="-160" y2="140"/>
+        <line x1="0" y1="26" x2="0" y2="150"/>
+        <line x1="25" y1="22" x2="160" y2="140"/>
+      `;
+    }
+    renderStage();
+  }
+
+  function setConc(hormone, level, btn) {
+    if (hormone === 'auxin') {
+      state.auxinConc = level;
+      document.querySelectorAll('#auxinConcCtrl .seg-btn').forEach(b => b.classList.remove('active'));
+    } else {
+      state.gibbConc = level;
+      document.querySelectorAll('#gibbConcCtrl .seg-btn').forEach(b => b.classList.remove('active'));
+    }
+    btn.classList.add('active');
+    renderStage();
+  }
+
+  function setDay(val) {
+    state.day = parseInt(val, 10);
+    document.getElementById('daySlider').value = state.day;
+    document.getElementById('dayLabel').textContent = state.day + '-күн';
+    renderStage();
+  }
+
+  function nextDay() {
+    setDay(state.day < 5 ? state.day + 1 : 1);
+  }
+
+  function prevDay() {
+    if (state.day > 1) setDay(state.day - 1);
+  }
+
+  function toggleAutoPlay() {
+    const btn = document.getElementById('autoPlayBtn');
+    if (state.autoTimer) {
+      clearInterval(state.autoTimer);
+      state.autoTimer = null;
+      btn.textContent = '▶ Авто';
+      btn.classList.remove('btn-active');
+    } else {
+      btn.textContent = '⏸ Тоқтату';
+      btn.classList.add('btn-active');
+      state.autoTimer = setInterval(() => {
+        if (state.day < 5) setDay(state.day + 1);
+        else toggleAutoPlay();
+      }, 1050);
+    }
+  }
+
+  function updateExplanationText() {
+    const box = document.getElementById('bioExplanation');
+    let msg = `<strong>${state.day}-күн бақылауы:</strong> `;
+
+    if (state.auxinConc === 'high') {
+      msg += `⚠️ Ауксиннің жоғары концентрациясы 2-үлгінің өсуін тежеді. `;
+    } else if (state.auxinConc === 'opt') {
+      msg += `2-үлгіде (Ауксин) қосалқы тамырлар белсенді дамуда. `;
+    }
+
+    if (state.gibbConc === 'opt' || state.gibbConc === 'high') {
+      msg += `3-үлгіде (Гиббереллин) сабақ буынаралықтары күрт ұзарды. `;
+    }
+
+    if (state.lightDir !== 'top' && state.day > 1) {
+      const sideText = state.lightDir === 'left' ? 'сол жаққа' : 'оң жаққа';
+      const shadeText = state.lightDir === 'left' ? 'оң (көлеңке)' : 'сол (көлеңке)';
+      msg += `Жарық ${sideText} бағытталғандықтан, ауксин сабақтың ${shadeText} жағына жиналып, оң фототропизм байқалды.`;
+    }
+    box.innerHTML = msg;
+  }
+
+  /* =====================================================================
+     3. ЖЫЛЖЫМАЛЫ СЫЗҒЫШ (DRAG & DROP)
+  ===================================================================== */
+  function initRuler() {
+    const ticksGroup = document.getElementById('rulerTicks');
+    const scalePx = 1.1;
+    const zeroOffset = 198;
+    let ticksHtml = '';
+
+    for (let mm = 0; mm <= 160; mm += 5) {
+      const y = zeroOffset - mm * scalePx;
+      const isMajor = mm % 20 === 0;
+      const isMid = mm % 10 === 0;
+      const tickW = isMajor ? 18 : (isMid ? 12 : 7);
+
+      ticksHtml += `<line x1="0" y1="${y}" x2="${tickW}" y2="${y}" stroke="#713f12" stroke-width="${isMajor ? 1.4 : 0.9}"/>`;
+      if (isMajor) {
+        ticksHtml += `<text x="21" y="${y + 3}" font-size="9" font-weight="bold" fill="#713f12">${mm}</text>`;
+      }
+    }
+    ticksGroup.innerHTML = ticksHtml;
+
+    const ruler = document.getElementById('rulerTool');
+    const svg = document.getElementById('labSvg');
+    let isDragging = false;
+    let startPt = { x: 0, y: 0 };
+    let currentTranslate = { x: 65, y: 72 };
+
+    function getSvgPoint(evt) {
+      const pt = svg.createSVGPoint();
+      const clientX = evt.touches ? evt.touches[0].clientX : evt.clientX;
+      const clientY = evt.touches ? evt.touches[0].clientY : evt.clientY;
+      pt.x = clientX;
+      pt.y = clientY;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    function onStart(e) {
+      isDragging = true;
+      ruler.style.cursor = 'grabbing';
+      const p = getSvgPoint(e);
+      startPt = { x: p.x - currentTranslate.x, y: p.y - currentTranslate.y };
+      e.preventDefault();
+    }
+
+    function onMove(e) {
+      if (!isDragging) return;
+      const p = getSvgPoint(e);
+      currentTranslate.x = Math.max(0, Math.min(790, p.x - startPt.x));
+      currentTranslate.y = Math.max(10, Math.min(180, p.y - startPt.y));
+      ruler.setAttribute('transform', `translate(${currentTranslate.x}, ${currentTranslate.y})`);
+    }
+
+    function onEnd() {
+      isDragging = false;
+      ruler.style.cursor = 'grab';
+    }
+
+    ruler.addEventListener('mousedown', onStart);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onEnd);
+
+    ruler.addEventListener('touchstart', onStart, { passive: false });
+    window.addEventListener('touchmove', onMove, { passive: false });
+    window.addEventListener('touchend', onEnd);
+  }
+
+  function toggleRuler(show) {
+    document.getElementById('rulerTool').style.display = show ? 'block' : 'none';
+  }
+
+  /* =====================================================================
+     4. БАҚЫЛАУ КЕСТЕСІ ЖӘНЕ SVG ӨСУ ГРАФИГІ
+  ===================================================================== */
+  function recordMeasurements() {
+    ['control', 'auxin', 'gibb', 'synergy'].forEach(t => {
+      state.recorded[t][state.day] = calculatePlantMetrics(t, state.day);
+    });
+    renderTable();
+    renderGrowthChartSvg();
+    updateStudentProgress();
+    showToast(`${state.day}-күннің өлшемдері кестеге тіркелді!`);
+  }
+
+  function autoFillAllDays() {
+    for (let d = 1; d <= 5; d++) {
+      ['control', 'auxin', 'gibb', 'synergy'].forEach(t => {
+        state.recorded[t][d] = calculatePlantMetrics(t, d);
+      });
+    }
+    setDay(5);
+    renderTable();
+    renderGrowthChartSvg();
+    updateStudentProgress();
+    showToast('1–5 күндердің барлық өлшемдері тіркелді!');
+  }
+
+  function renderTable() {
+    const tbody = document.getElementById('obsTableBody');
+    const rows = [
+      { id: 'control', label: '1. Бақылау (Су)' },
+      { id: 'auxin',   label: '2. Ауксин (ИУҚ)' },
+      { id: 'gibb',    label: '3. Гиббереллин (ГҚ)' },
+      { id: 'synergy', label: '4. Ауксин + ГҚ' }
+    ];
+
+    let html = '';
+    rows.forEach(r => {
+      const rec = state.recorded[r.id];
+      html += `<tr><td>${r.label}</td>`;
+      for (let d = 1; d <= 5; d++) {
+        if (rec[d]) {
+          html += `<td class="recorded-cell">${rec[d].stem} мм</td>`;
+        } else {
+          html += `<td style="color:#94a3b8;">—</td>`;
+        }
+      }
+      const daysRecorded = Object.keys(rec).map(Number).sort((a, b) => a - b);
+      if (daysRecorded.length >= 2) {
+        const first = rec[daysRecorded[0]].stem;
+        const last = rec[daysRecorded[daysRecorded.length - 1]].stem;
+        html += `<td style="font-weight:700; color:#14532d;">+${last - first} мм</td>`;
+      } else {
+        html += `<td>—</td>`;
+      }
+
+      if (daysRecorded.length >= 1) {
+        const latest = rec[daysRecorded[daysRecorded.length - 1]];
+        html += `<td>${latest.lateralRoots} дана</td>`;
+      } else {
+        html += `<td>—</td>`;
+      }
+      html += `</tr>`;
+    });
+
+    tbody.innerHTML = html;
+  }
+
+  function clearTable() {
+    state.recorded = { control: {}, auxin: {}, gibb: {}, synergy: {} };
+    renderTable();
+    renderGrowthChartSvg();
+    updateStudentProgress();
+    showToast('Бақылау кестесі тазартылды');
+  }
+
+  function renderGrowthChartSvg() {
+    const svg = document.getElementById('growthChartSvg');
+    const W = 500, H = 240;
+    const padL = 46, padR = 20, padT = 20, padB = 34;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+    const maxY = 170;
+
+    let content = '';
+
+    // Горизонталь тор сызықтар
+    for (let v = 0; v <= 160; v += 40) {
+      const y = padT + plotH - (v / maxY) * plotH;
+      content += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+      content += `<text x="${padL - 6}" y="${y + 4}" font-size="11" fill="#64748b" text-anchor="end">${v} мм</text>`;
+    }
+
+    // Вертикаль күндер сызықтары
+    for (let d = 1; d <= 5; d++) {
+      const x = padL + ((d - 1) / 4) * plotW;
+      content += `<line x1="${x}" y1="${padT}" x2="${x}" y2="${padT + plotH}" stroke="#e2e8f0" stroke-width="1"/>`;
+      content += `<text x="${x}" y="${H - 10}" font-size="11" fill="#64748b" text-anchor="middle">${d}-күн</text>`;
+    }
+
+    // Осьтер
+    content += `<polyline points="${padL},${padT} ${padL},${padT + plotH} ${W - padR},${padT + plotH}" fill="none" stroke="#94a3b8" stroke-width="1.5"/>`;
+
+    const series = [
+      { id: 'control', color: '#64748b' },
+      { id: 'auxin',   color: '#15803d' },
+      { id: 'gibb',    color: '#d97706' },
+      { id: 'synergy', color: '#0284c7' }
+    ];
+
+    series.forEach(s => {
+      const rec = state.recorded[s.id];
+      const days = Object.keys(rec).map(Number).sort((a, b) => a - b);
+      const pts = [];
+
+      if (days.length > 0) {
+        days.forEach(d => {
+          pts.push({
+            x: padL + ((d - 1) / 4) * plotW,
+            y: padT + plotH - (rec[d].stem / maxY) * plotH
+          });
+        });
+      } else {
+        for (let d = 1; d <= state.day; d++) {
+          const m = calculatePlantMetrics(s.id, d);
+          pts.push({
+            x: padL + ((d - 1) / 4) * plotW,
+            y: padT + plotH - (m.stem / maxY) * plotH
+          });
+        }
+      }
+
+      if (pts.length > 0) {
+        const ptStr = pts.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+        const dash = days.length > 0 ? '' : 'stroke-dasharray="4,4"';
+        content += `<polyline points="${ptStr}" fill="none" stroke="${s.color}" stroke-width="2.5" ${dash}/>`;
+        pts.forEach(p => {
+          content += `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4" fill="${s.color}"/>`;
+        });
+      }
+    });
+
+    svg.innerHTML = content;
+  }
+
+  /* =====================================================================
+     5. БАҒАЛАУ ТЕСТІ ЖӘНЕ МҰҒАЛІМГЕ ЖІБЕРУ (SUBMISSION)
+  ===================================================================== */
+  function initQuiz() {
+    const container = document.getElementById('quizContainer');
+    let html = '';
+    quizData.forEach((item, qIdx) => {
+      html += `
+        <div class="quiz-item" id="qItem-${qIdx}">
+          <div class="quiz-q">${item.q}</div>
+          <div class="quiz-options">
+            ${item.options.map((opt, oIdx) => `
+              <button class="quiz-opt" onclick="selectAnswer(${qIdx}, ${oIdx}, this)">${opt}</button>
+            `).join('')}
+          </div>
+          <div class="quiz-feedback" id="qFeed-${qIdx}"></div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+
+  function selectAnswer(qIdx, oIdx, btn) {
+    state.answers[qIdx] = oIdx;
+    const item = quizData[qIdx];
+    const parent = document.getElementById(`qItem-${qIdx}`);
+    const buttons = parent.querySelectorAll('.quiz-opt');
+    const feed = document.getElementById(`qFeed-${qIdx}`);
+
+    buttons.forEach(b => b.classList.remove('correct', 'wrong'));
+
+    if (oIdx === item.correct) {
+      btn.classList.add('correct');
+      feed.style.color = '#15803d';
+      feed.textContent = '✓ Дұрыс! ' + item.exp;
+    } else {
+      btn.classList.add('wrong');
+      buttons[item.correct].classList.add('correct');
+      feed.style.color = '#b91c1c';
+      feed.textContent = '✕ Қате. ' + item.exp;
+    }
+
+    updateStudentProgress();
+  }
+
+  function getStudentScoreStats() {
+    let correctCount = 0;
+    const qResults = [];
+    quizData.forEach((item, idx) => {
+      const isOk = state.answers[idx] === item.correct;
+      if (isOk) correctCount++;
+      qResults.push(isOk ? 1 : 0);
+    });
+
+    const daysRecordedCount = Object.keys(state.recorded.control).length;
+    // Бағалау формуласы: 5 тест сұрағы (әрқайсысы 16% = 80%) + Тәжірибе өлшемдерін тіркеу (20%)
+    const quizPct = (correctCount / quizData.length) * 80;
+    const labPct = Math.min(5, daysRecordedCount) * 4;
+    const totalPct = Math.round(quizPct + labPct);
+
+    return {
+      correctCount,
+      totalQuestions: quizData.length,
+      daysRecordedCount,
+      totalPct,
+      qResults
+    };
+  }
+
+  function updateStudentProgress() {
+    const stats = getStudentScoreStats();
+    const answeredCount = Object.keys(state.answers).length;
+    document.getElementById('studentProgressText').textContent =
+      `Өлшемдер: ${stats.daysRecordedCount}/5 күн | Тест: ${answeredCount}/5`;
+    document.getElementById('quizScoreBadge').textContent =
+      `Ұпай: ${stats.correctCount} / ${stats.totalQuestions} (${stats.totalPct}%)`;
+  }
+
+  // UTF-8 қауіпсіз Base64 кодтау және декодтау
+  function encodePayload(obj) {
+    const jsonStr = JSON.stringify(obj);
+    const bytes = new TextEncoder().encode(jsonStr);
+    let binStr = '';
+    bytes.forEach(b => { binStr += String.fromCharCode(b); });
+    return 'ZERT7-' + btoa(binStr);
+  }
+
+  function decodePayload(codeStr) {
+    const clean = codeStr.trim().replace(/^ZERT7-/, '');
+    const binStr = atob(clean);
+    const bytes = new Uint8Array(binStr.length);
+    for (let i = 0; i < binStr.length; i++) {
+      bytes[i] = binStr.charCodeAt(i);
+    }
+    const jsonStr = new TextDecoder().decode(bytes);
+    return JSON.parse(jsonStr);
+  }
+
+  let latestSubmissionObj = null;
+
+  function submitStudentWork() {
+    const name = document.getElementById('studentNameInput').value.trim();
+    const className = document.getElementById('studentClassInput').value.trim().toUpperCase();
+    const conclusion = document.getElementById('conclusionInput').value.trim();
+
+    if (!name) {
+      showToast('⚠️ Алдымен оқушының аты-жөнін енгізіңіз!');
+      document.getElementById('studentNameInput').focus();
+      return;
+    }
+    if (!className) {
+      showToast('⚠️ Сыныбын көрсетіңіз (мысалы: 10А)!');
+      document.getElementById('studentClassInput').focus();
+      return;
+    }
+
+    const stats = getStudentScoreStats();
+    const submission = {
+      id: name.toLowerCase() + '_' + className.toLowerCase(),
+      name: name,
+      className: className,
+      score: stats.correctCount,
+      totalQ: stats.totalQuestions,
+      daysRecorded: stats.daysRecordedCount,
+      pct: stats.totalPct,
+      qResults: stats.qResults,
+      conclusion: conclusion || 'Қорытынды жазылмаған',
+      timestamp: new Date().toLocaleString('kk-KZ')
+    };
+
+    latestSubmissionObj = submission;
+    saveSubmissionToStorage(submission);
+
+    const code = encodePayload(submission);
+    document.getElementById('generatedCodeBox').value = code;
+    document.getElementById('submissionStatusBox').classList.add('visible');
+    showToast('✅ Жұмыс сақталды және мұғалім панеліне қосылды!');
+  }
+
+  function copyResultCode() {
+    const box = document.getElementById('generatedCodeBox');
+    box.select();
+    box.setSelectionRange(0, 99999);
+    try {
+      document.execCommand('copy');
+      showToast('📋 Нәтиже коды буферге көшірілді!');
+    } catch (e) {
+      showToast('Кодты қолмен белгілеп көшіріңіз');
+    }
+  }
+
+  function downloadResultJson() {
+    if (!latestSubmissionObj) return;
+    const dataStr = JSON.stringify(latestSubmissionObj, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const safeName = latestSubmissionObj.name.replace(/\s+/g, '_');
+    a.href = url;
+    a.download = `zert7_${latestSubmissionObj.className}_${safeName}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('💾 Нәтиже файлы жүктелді!');
+  }
+
+  /* =====================================================================
+     6. МҰҒАЛІМ ПАНЕЛІ ЖӘНЕ СЫНЫПТЫҢ МЕҢГЕРУ ДИАГРАММАЛАРЫ
+  ===================================================================== */
+  function getStoredSubmissions() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveSubmissionToStorage(sub) {
+    const list = getStoredSubmissions();
+    const idx = list.findIndex(item => item.id === sub.id);
+    if (idx >= 0) {
+      list[idx] = sub;
+    } else {
+      list.push(sub);
+    }
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    } catch (e) {}
+  }
+
+  function getMasteryTier(pct) {
+    if (pct >= 85) return { key: 'high', label: 'Жоғары деңгей (85–100%)', short: 'Жоғары («5»)', color: '#16a34a', badgeClass: 'tier-high' };
+    if (pct >= 65) return { key: 'good', label: 'Орташадан жоғары (65–84%)', short: 'Жақсы («4»)', color: '#0284c7', badgeClass: 'tier-good' };
+    if (pct >= 40) return { key: 'mid',  label: 'Орташа / Базалық (40–64%)', short: 'Орташа («3»)', color: '#eab308', badgeClass: 'tier-mid' };
+    return { key: 'low', label: 'Төмен деңгей (0–39%)', short: 'Төмен («2»)', color: '#dc2626', badgeClass: 'tier-low' };
+  }
+
+  // Демо сынып деректерін жүктеу (18 оқушы - 10А сыныбы)
+  function loadDemoClassData() {
+    const demoStudents = [
+      { name: "Әлихан Нұрланұлы", className: "10А", score: 5, daysRecorded: 5, pct: 100, qResults: [1,1,1,1,1], conclusion: "Ауксин тамырлану мен фототропизмді, ал гиббереллин сабақ буынаралықтарының ұзаруын күшейтеді." },
+      { name: "Аружан Серікқызы", className: "10А", score: 5, daysRecorded: 5, pct: 100, qResults: [1,1,1,1,1], conclusion: "Екі гормон бірге әсер еткенде синергиялық нәтиже байқалып, өсімдік максималды өсті." },
+      { name: "Данияр Қайратұлы", className: "10А", score: 4, daysRecorded: 5, pct: 84,  qResults: [1,1,0,1,1], conclusion: "Гиббереллин сабақты қатты ұзартты, ауксин қосалқы тамырларды көбейтті." },
+      { name: "Мәдина Ержанқызы", className: "10А", score: 5, daysRecorded: 5, pct: 100, qResults: [1,1,1,1,1], conclusion: "Жарық бүйірден түскенде ауксин көлеңке жаққа жиналып, сабақ жарыққа иілді." },
+      { name: "Нұрасыл Болатұлы", className: "10А", score: 3, daysRecorded: 4, pct: 64,  qResults: [1,0,0,1,1], conclusion: "Фитогормондар өсімдіктің өсуін жылдамдатады." },
+      { name: "Айзере Талғатқызы", className: "10А", score: 4, daysRecorded: 5, pct: 84,  qResults: [1,1,0,1,1], conclusion: "Ауксин қалемшелерді тамырландыруға тиімді." },
+      { name: "Ерасыл Маратұлы", className: "10А", score: 2, daysRecorded: 3, pct: 44,  qResults: [1,0,0,1,0], conclusion: "Гиббереллин сабақты ұзартты." },
+      { name: "Кәусар Асқарқызы", className: "10А", score: 5, daysRecorded: 5, pct: 100, qResults: [1,1,1,1,1], conclusion: "Ауксин мен гиббереллиннің өсімдік мүшелеріне әсері әртүрлі және бірін-бірі толықтырады." },
+      { name: "Санжар Бауыржанұлы", className: "10А", score: 3, daysRecorded: 5, pct: 68,  qResults: [1,1,0,0,1], conclusion: "3-үлгідегі өскін ең биік болып өсті." },
+      { name: "Томирис Дәуренқызы", className: "10А", score: 4, daysRecorded: 5, pct: 84,  qResults: [1,0,1,1,1], conclusion: "Ауксин жоғары концентрацияда өсуді тежейтінін тәжірибеде көрдік." },
+      { name: "Бекзат Әділұлы", className: "10А", score: 1, daysRecorded: 2, pct: 24,  qResults: [1,0,0,0,0], conclusion: "Өскіндер 5 күнде өсті." },
+      { name: "Інжу Саматқызы", className: "10А", score: 4, daysRecorded: 5, pct: 84,  qResults: [1,1,0,1,1], conclusion: "Гиббереллин буынаралықтарды созады, ауксин тамыр жүйесін дамытады." },
+      { name: "Әмірхан Русланұлы", className: "10А", score: 3, daysRecorded: 4, pct: 64,  qResults: [1,0,0,1,1], conclusion: "Гормон қосылған өскіндер бақылау тобынан биік өсті." },
+      { name: "Дильназ Қанатқызы", className: "10А", score: 5, daysRecorded: 5, pct: 100, qResults: [1,1,1,1,1], conclusion: "Ауксиннің көлеңке жаққа ауысуы фототропизм құбылысын тудырады." },
+      { name: "Рамазан Ерланұлы", className: "10А", score: 2, daysRecorded: 3, pct: 44,  qResults: [0,0,0,1,1], conclusion: "Ауксин тамырға әсер етеді." },
+      { name: "Аяулым Жеңісқызы", className: "10А", score: 4, daysRecorded: 5, pct: 84,  qResults: [1,1,0,1,1], conclusion: "Ауксин мен гиббереллин бірге қолданылғанда ең жақсы нәтиже берді." },
+      { name: "Нұрдәулет Олжасұлы", className: "10А", score: 3, daysRecorded: 5, pct: 68,  qResults: [1,0,0,1,1], conclusion: "Гиббереллин сабақтың өсуін тездетеді." },
+      { name: "Сезім Бақытқызы", className: "10А", score: 5, daysRecorded: 5, pct: 100, qResults: [1,1,1,1,1], conclusion: "Зертханалық жұмыс барысында екі фитогормонның физиологиялық рөлі толық дәлелденді." }
+    ];
+
+    demoStudents.forEach(s => {
+      saveSubmissionToStorage({
+        id: s.name.toLowerCase() + '_' + s.className.toLowerCase(),
+        name: s.name,
+        className: s.className,
+        score: s.score,
+        totalQ: 5,
+        daysRecorded: s.daysRecorded,
+        pct: s.pct,
+        qResults: s.qResults,
+        conclusion: s.conclusion,
+        timestamp: '12.11.2026, 14:30'
+      });
+    });
+
+    renderTeacherDashboard();
+    showToast('👥 10«А» сыныбының 18 оқушысының деректері жүктелді!');
+  }
+
+  function importFromCodes() {
+    const raw = document.getElementById('importCodesInput').value.trim();
+    if (!raw) {
+      showToast('⚠️ Алдымен оқушы кодтарын енгізіңіз');
+      return;
+    }
+    const tokens = raw.split(/[\s,;]+/).filter(t => t.startsWith('ZERT7-'));
+    if (tokens.length === 0) {
+      showToast('⚠️ Жарамды ZERT7-... коды табылмады');
+      return;
+    }
+
+    let added = 0;
+    tokens.forEach(tok => {
+      try {
+        const obj = decodePayload(tok);
+        if (obj && obj.name && typeof obj.pct === 'number') {
+          saveSubmissionToStorage(obj);
+          added++;
+        }
+      } catch (e) {}
+    });
+
+    document.getElementById('importCodesInput').value = '';
+    renderTeacherDashboard();
+    showToast(`✅ ${added} оқушының нәтижесі сәтті қосылды!`);
+  }
+
+  function importFromFiles(event) {
+    const files = Array.from(event.target.files || []);
+    if (!files.length) return;
+
+    let loaded = 0;
+    let processed = 0;
+
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const obj = JSON.parse(e.target.result);
+          if (obj && obj.name && typeof obj.pct === 'number') {
+            saveSubmissionToStorage(obj);
+            loaded++;
+          }
+        } catch (err) {}
+        processed++;
+        if (processed === files.length) {
+          renderTeacherDashboard();
+          showToast(`📂 ${loaded} файлдан оқушы нәтижелері жүктелді!`);
+          event.target.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  function clearAllTeacherData() {
+    localStorage.removeItem(STORAGE_KEY);
+    renderTeacherDashboard();
+    showToast('🗑️ Барлық сақталған деректер тазартылды');
+  }
+
+  function renderTeacherDashboard() {
+    const allList = getStoredSubmissions();
+    const filterSelect = document.getElementById('classFilterSelect');
+    const currentFilter = filterSelect.value;
+
+    // Сыныптар тізімін жаңарту
+    const classes = Array.from(new Set(allList.map(s => s.className))).sort();
+    filterSelect.innerHTML = `<option value="ALL">Барлық сыныптар (${allList.length})</option>` +
+      classes.map(c => `<option value="${c}" ${c === currentFilter ? 'selected' : ''}>${c} сыныбы</option>`).join('');
+
+    const activeClass = filterSelect.value;
+    const searchQuery = document.getElementById('studentSearchInput').value.trim().toLowerCase();
+
+    let filtered = allList;
+    if (activeClass !== 'ALL') {
+      filtered = filtered.filter(s => s.className === activeClass);
+    }
+
+    // KPI Есептеу
+    const count = filtered.length;
+    document.getElementById('kpiTotalStudents').textContent = count;
+    document.getElementById('kpiClassFilterInfo').textContent = activeClass === 'ALL' ? 'Барлық сыныптар бойынша' : `${activeClass} сыныбы бойынша`;
+
+    if (count === 0) {
+      document.getElementById('kpiAvgScore').textContent = '0%';
+      document.getElementById('kpiAvgPoints').textContent = 'Орташа ұпай: 0 / 5';
+      document.getElementById('kpiQualityRate').textContent = '0%';
+      document.getElementById('kpiHardestQ').textContent = '—';
+      renderMasteryTierChart([]);
+      renderQuestionAnalysisChart([]);
+      renderAllStudentsBarChart([]);
+      document.getElementById('teacherRosterBody').innerHTML =
+        `<tr><td colspan="8" style="text-align:center; padding:24px; color:#64748b;">Әзірге оқушылар деректері жоқ. Жоғарыдағы <strong>«Демо сынып деректерін жүктеу»</strong> батырмасын басыңыз немесе оқушы кодын қосыңыз.</td></tr>`;
+      return;
+    }
+
+    const avgPct = Math.round(filtered.reduce((acc, s) => acc + s.pct, 0) / count);
+    const avgPts = (filtered.reduce((acc, s) => acc + s.score, 0) / count).toFixed(1);
+    const qualityCount = filtered.filter(s => s.pct >= 65).length;
+    const qualityPct = Math.round((qualityCount / count) * 100);
+
+    document.getElementById('kpiAvgScore').textContent = avgPct + '%';
+    document.getElementById('kpiAvgPoints').textContent = `Орташа ұпай: ${avgPts} / 5`;
+    document.getElementById('kpiQualityRate').textContent = qualityPct + '%';
+
+    // Ең қиын сұрақты анықтау
+    const qCorrectTotals = [0, 0, 0, 0, 0];
+    filtered.forEach(s => {
+      (s.qResults || []).forEach((val, idx) => {
+        if (idx < 5) qCorrectTotals[idx] += val;
+      });
+    });
+    let minIdx = 0;
+    for (let i = 1; i < 5; i++) {
+      if (qCorrectTotals[i] < qCorrectTotals[minIdx]) minIdx = i;
+    }
+    const minQRate = Math.round((qCorrectTotals[minIdx] / count) * 100);
+    document.getElementById('kpiHardestQ').textContent = `${quizData[minIdx].shortTitle} (${minQRate}%)`;
+    document.getElementById('kpiHardestQSub').textContent = `Тек ${qCorrectTotals[minIdx]} / ${count} оқушы дұрыс жауап берді`;
+
+    // Диаграммаларды салу
+    renderMasteryTierChart(filtered);
+    renderQuestionAnalysisChart(filtered);
+    renderAllStudentsBarChart(filtered);
+
+    // Кестені салу
+    const searched = searchQuery
+      ? filtered.filter(s => s.name.toLowerCase().includes(searchQuery))
+      : filtered;
+
+    // Ұпайы бойынша сұрыптау (жоғарыдан төменге)
+    const sorted = [...searched].sort((a, b) => b.pct - a.pct);
+
+    const tbody = document.getElementById('teacherRosterBody');
+    tbody.innerHTML = sorted.map((s, idx) => {
+      const tier = getMasteryTier(s.pct);
+      return `
+        <tr>
+          <td>${idx + 1}</td>
+          <td style="text-align:left; font-weight:700;">${s.name}</td>
+          <td>${s.className}</td>
+          <td>${s.daysRecorded} / 5 күн</td>
+          <td><strong>${s.score} / 5</strong></td>
+          <td><strong>${s.pct}%</strong></td>
+          <td><span class="tier-badge ${tier.badgeClass}">${tier.short}</span></td>
+          <td>
+            <button class="btn" style="padding:4px 10px; font-size:0.78rem;" onclick="inspectStudent('${s.id}')">🔍 Толығырақ</button>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // 1-ДИАГРАММА: Меңгеру деңгейлері бойынша Donut + Horizontal Bar
+  function renderMasteryTierChart(students) {
+    const svg = document.getElementById('masteryTierSvg');
+    if (!students.length) {
+      svg.innerHTML = `<text x="260" y="130" text-anchor="middle" fill="#94a3b8" font-size="13">Деректер жоқ</text>`;
+      return;
+    }
+
+    const tiers = [
+      { key: 'high', label: 'Жоғары (85–100% «5»)', color: '#16a34a', count: 0 },
+      { key: 'good', label: 'Жақсы (65–84% «4»)',   color: '#0284c7', count: 0 },
+      { key: 'mid',  label: 'Орташа (40–64% «3»)',  color: '#eab308', count: 0 },
+      { key: 'low',  label: 'Төмен (0–39% «2»)',    color: '#dc2626', count: 0 }
+    ];
+
+    students.forEach(s => {
+      const t = getMasteryTier(s.pct);
+      const found = tiers.find(item => item.key === t.key);
+      if (found) found.count++;
+    });
+
+    const total = students.length;
+    let html = '';
+
+    // Сол жақта Donut шеңбер диаграммасы
+    const cx = 115, cy = 128, r = 68, strokeW = 26;
+    const circumference = 2 * Math.PI * r;
+    let offset = 0;
+
+    tiers.forEach(t => {
+      if (t.count > 0) {
+        const frac = t.count / total;
+        const dash = frac * circumference;
+        html += `
+          <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${t.color}"
+                  stroke-width="${strokeW}" stroke-dasharray="${dash} ${circumference - dash}"
+                  stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})"/>
+        `;
+        offset += dash;
+      }
+    });
+
+    html += `
+      <text x="${cx}" y="${cy - 4}" text-anchor="middle" font-size="20" font-weight="800" fill="#0f172a">${total}</text>
+      <text x="${cx}" y="${cy + 14}" text-anchor="middle" font-size="11" fill="#64748b">оқушы</text>
+    `;
+
+    // Оң жақта деңгейлер шкаласы
+    let startY = 44;
+    tiers.forEach(t => {
+      const pct = Math.round((t.count / total) * 100);
+      const barMaxW = 195;
+      const barW = (t.count / total) * barMaxW;
+
+      html += `
+        <rect x="225" y="${startY - 11}" width="12" height="12" rx="3" fill="${t.color}"/>
+        <text x="243" y="${startY}" font-size="12" font-weight="700" fill="#1e293b">${t.label}</text>
+        <text x="505" y="${startY}" font-size="12" font-weight="800" fill="${t.color}" text-anchor="end">${t.count} (${pct}%)</text>
+        <rect x="225" y="${startY + 6}" width="${barMaxW}" height="9" rx="4.5" fill="#f1f5f9"/>
+        <rect x="225" y="${startY + 6}" width="${barW}" height="9" rx="4.5" fill="${t.color}"/>
+      `;
+      startY += 52;
+    });
+
+    svg.innerHTML = html;
+  }
+
+  // 2-ДИАГРАММА: Тапсырмалар (сұрақтар) бойынша талдау
+  function renderQuestionAnalysisChart(students) {
+    const svg = document.getElementById('questionAnalysisSvg');
+    if (!students.length) {
+      svg.innerHTML = `<text x="260" y="130" text-anchor="middle" fill="#94a3b8" font-size="13">Деректер жоқ</text>`;
+      return;
+    }
+
+    const total = students.length;
+    const qTotals = [0, 0, 0, 0, 0];
+    students.forEach(s => {
+      (s.qResults || []).forEach((val, idx) => {
+        if (idx < 5) qTotals[idx] += val;
+      });
+    });
+
+    let html = '';
+    let y = 36;
+    const barStartX = 185;
+    const barMaxW = 265;
+
+    quizData.forEach((item, idx) => {
+      const correctNum = qTotals[idx];
+      const pct = Math.round((correctNum / total) * 100);
+      const barW = (pct / 100) * barMaxW;
+      const color = pct >= 80 ? '#16a34a' : (pct >= 55 ? '#0284c7' : '#dc2626');
+
+      html += `
+        <text x="12" y="${y + 4}" font-size="11.5" font-weight="600" fill="#1e293b">${item.shortTitle}</text>
+        <rect x="${barStartX}" y="${y - 10}" width="${barMaxW}" height="18" rx="5" fill="#f1f5f9"/>
+        <rect x="${barStartX}" y="${y - 10}" width="${barW}" height="18" rx="5" fill="${color}"/>
+        <text x="${barStartX + barMaxW + 10}" y="${y + 4}" font-size="12" font-weight="800" fill="${color}">${pct}%</text>
+      `;
+      y += 45;
+    });
+
+    svg.innerHTML = html;
+  }
+
+  // 3-ДИАГРАММА: Сыныптың толық оқушыларының меңгеру бағаналы диаграммасы
+  function renderAllStudentsBarChart(students) {
+    const svg = document.getElementById('allStudentsBarSvg');
+    if (!students.length) {
+      svg.innerHTML = `<text x="550" y="145" text-anchor="middle" fill="#94a3b8" font-size="14">Оқушылар тізімі бос</text>`;
+      return;
+    }
+
+    const sorted = [...students].sort((a, b) => b.pct - a.pct);
+    const n = sorted.length;
+    const W = 1100, H = 290;
+    const padL = 48, padR = 24, padT = 24, padB = 92;
+    const plotW = W - padL - padR;
+    const plotH = H - padT - padB;
+
+    let html = '';
+
+    // Горизонталь пайыздық тор
+    [0, 25, 50, 75, 100].forEach(val => {
+      const y = padT + plotH - (val / 100) * plotH;
+      html += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="#e2e8f0" stroke-width="1"/>`;
+      html += `<text x="${padL - 8}" y="${y + 4}" font-size="11" fill="#64748b" text-anchor="end">${val}%</text>`;
+    });
+
+    // 65% сапа межесінің үзік сызығы
+    const y65 = padT + plotH - 0.65 * plotH;
+    html += `<line x1="${padL}" y1="${y65}" x2="${W - padR}" y2="${y65}" stroke="#0284c7" stroke-width="1.2" stroke-dasharray="5,4"/>`;
+    html += `<text x="${W - padR}" y="${y65 - 4}" font-size="10" font-weight="bold" fill="#0284c7" text-anchor="end">Сапа межесі (65%)</text>`;
+
+    const slotW = plotW / n;
+    const barW = Math.min(38, Math.max(14, slotW * 0.65));
+
+    sorted.forEach((s, i) => {
+      const tier = getMasteryTier(s.pct);
+      const cx = padL + slotW * i + slotW / 2;
+      const barH = (s.pct / 100) * plotH;
+      const barY = padT + plotH - barH;
+      const shortName = s.name.split(' ')[0];
+
+      html += `
+        <rect x="${cx - barW / 2}" y="${barY}" width="${barW}" height="${barH}" rx="4" fill="${tier.color}"/>
+        <text x="${cx}" y="${barY - 5}" font-size="10.5" font-weight="800" fill="${tier.color}" text-anchor="middle">${s.pct}%</text>
+        <g transform="translate(${cx}, ${padT + plotH + 10}) rotate(38)">
+          <text x="0" y="0" font-size="11" font-weight="600" fill="#1e293b" text-anchor="start">${shortName}</text>
+        </g>
+      `;
+    });
+
+    svg.innerHTML = html;
+  }
+
+  function inspectStudent(id) {
+    const s = getStoredSubmissions().find(item => item.id === id);
+    if (!s) return;
+
+    const tier = getMasteryTier(s.pct);
+    document.getElementById('modalStudentTitle').textContent = `${s.name} (${s.className} сыныбы)`;
+
+    let qHtml = '';
+    quizData.forEach((q, idx) => {
+      const ok = (s.qResults || [])[idx] === 1;
+      qHtml += `
+        <div style="padding:8px 10px; margin-bottom:6px; border-radius:8px; background:${ok ? '#f0fdf4' : '#fef2f2'}; border:1px solid ${ok ? '#86efac' : '#fecaca'};">
+          <strong>${q.shortTitle}:</strong> <span style="color:${ok ? '#15803d' : '#dc2626'}; font-weight:700;">${ok ? '✓ Дұрыс (1 ұпай)' : '✕ Қате (0 ұпай)'}</span>
+        </div>
+      `;
+    });
+
+    document.getElementById('modalStudentContent').innerHTML = `
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:14px;">
+        <div style="padding:10px 14px; background:#f8fafc; border-radius:8px; border:1px solid #cbd5e1;">
+          <div style="font-size:0.78rem; color:#64748b;">Жалпы меңгеру</div>
+          <div style="font-size:1.3rem; font-weight:800; color:${tier.color};">${s.pct}% — ${tier.short}</div>
+        </div>
+        <div style="padding:10px 14px; background:#f8fafc; border-radius:8px; border:1px solid #cbd5e1;">
+          <div style="font-size:0.78rem; color:#64748b;">Тест және тәжірибе</div>
+          <div style="font-size:1.1rem; font-weight:700;">Тест: ${s.score}/5 | Өлшемдер: ${s.daysRecorded}/5 күн</div>
+        </div>
+      </div>
+      <div style="margin-bottom:14px;">
+        <div style="font-weight:700; margin-bottom:4px;">Оқушының жазған қорытындысы:</div>
+        <div style="padding:10px 12px; background:#fefce8; border-left:4px solid #eab308; border-radius:6px; font-style:italic;">
+          «${s.conclusion}»
+        </div>
+      </div>
+      <div>
+        <div style="font-weight:700; margin-bottom:6px;">Тапсырмалар бойынша талдау:</div>
+        ${qHtml}
+      </div>
+    `;
+
+    document.getElementById('detailModal').classList.add('open');
+  }
+
+  function closeDetailModal() {
+    document.getElementById('detailModal').classList.remove('open');
+  }
+
+  function exportClassCSV() {
+    const list = getStoredSubmissions();
+    if (!list.length) {
+      showToast('⚠️ Экспорттау үшін деректер жоқ');
+      return;
+    }
+
+    let csv = '\uFEFF№;Оқушының аты-жөні;Сыныбы;Тәжірибе өлшемдері (күн);Тест ұпайы (5-тен);Меңгеру (%);Меңгеру деңгейі;Қорытынды\n';
+    list.forEach((s, i) => {
+      const tier = getMasteryTier(s.pct);
+      const cleanConcl = (s.conclusion || '').replace(/[\r\n;]+/g, ' ');
+      csv += `${i + 1};${s.name};${s.className};${s.daysRecorded};${s.score};${s.pct}%;${tier.short};${cleanConcl}\n`;
+    });
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'Zertkhanalyk_jumys_7_Analiz.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    showToast('📥 Сынып анализі CSV (Excel) форматында жүктелді!');
+  }
+
+  /* =====================================================================
+     7. НАВИГАЦИЯ ЖӘНЕ ҚОСЫМША ФУНКЦИЯЛАР
+  ===================================================================== */
+  function switchMode(mode) {
+    document.querySelectorAll('.mode-view').forEach(v => v.classList.remove('active'));
+    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+
+    if (mode === 'student') {
+      document.getElementById('studentModeView').classList.add('active');
+      document.getElementById('roleStudentBtn').classList.add('active');
+    } else {
+      document.getElementById('teacherModeView').classList.add('active');
+      document.getElementById('roleTeacherBtn').classList.add('active');
+      renderTeacherDashboard();
+    }
+  }
+
+  function switchSubTab(tabId, btn) {
+    document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tabId).classList.add('active');
+    btn.classList.add('active');
+    if (tabId === 'lab') renderGrowthChartSvg();
+  }
+
+  function resetLab() {
+    if (state.autoTimer) toggleAutoPlay();
+    state.auxinConc = 'opt';
+    state.gibbConc = 'opt';
+    state.lightDir = 'top';
+    document.querySelectorAll('#auxinConcCtrl .seg-btn').forEach((b, i) => b.classList.toggle('active', i === 1));
+    document.querySelectorAll('#gibbConcCtrl .seg-btn').forEach((b, i) => b.classList.toggle('active', i === 1));
+    setLight('top', document.querySelectorAll('#lightCtrl .seg-btn')[1]);
+    setDay(1);
+    clearTable();
+    showToast('Зертхана бастапқы күйге келтірілді');
+  }
+
+  function showToast(text) {
+    const t = document.getElementById('toast');
+    t.textContent = text;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    initRuler();
+    renderStage();
+    renderTable();
+    renderGrowthChartSvg();
+    initQuiz();
+    updateStudentProgress();
+  });
+</script>
+</body>
+</html>
